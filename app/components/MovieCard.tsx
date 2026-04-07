@@ -14,7 +14,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
 
   return (
-    <Link href={`/movie/${movie.id}`}>
+    <Link href={`/movie/${movie?.id}`}>
       <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 cursor-pointer">
         <img src={imageUrl} alt={movie.title} className="w-full h-96 object-cover" />
         <div className="p-4">
