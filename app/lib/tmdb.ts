@@ -1,11 +1,9 @@
-
-
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_TMDB_BASE_URL;
 
-export async function searchMovies(query: string) {
+export async function searchMovies(query: string, page: number = 1) {
   const response = await fetch(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US&page=${page}`
   );
   
   if (!response.ok) {
@@ -13,12 +11,17 @@ export async function searchMovies(query: string) {
   }
   
   const data = await response.json();
-  return data.results;
+  return {
+    results: data.results,
+    totalPages: data.total_pages,
+    totalResults: data.total_results,
+    currentPage: page
+  };
 }
 
-export async function getPopularMovies() {
+export async function getPopularMovies(page: number = 1) {
   const response = await fetch(
-    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`
   );
   
   if (!response.ok) {
@@ -26,7 +29,10 @@ export async function getPopularMovies() {
   }
   
   const data = await response.json();
-  return data.results;
+  return {
+    results: data.results,
+    totalPages: data.total_pages,
+    totalResults: data.total_results,
+    currentPage: page
+  };
 }
-
- 
